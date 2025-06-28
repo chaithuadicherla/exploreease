@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Dashboard - ExploreEase</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f0faff;
+    }
+    h1 {
+      color: #0077b6;
+    }
+    #userInfo {
+      margin-bottom: 30px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    #userBookings {
+      margin-top: 20px;
+    }
+    .booking-card {
+      background: #fff;
+      padding: 20px;
+      margin: 10px 0;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .booking-card p {
+      margin: 5px 0;
+    }
+    #logoutBtn {
+      margin-top: 40px;
+      background: #0077b6;
+      color: #fff;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    #logoutBtn:hover {
+      background: #005f8a;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Your Dashboard 🌟</h1>
+  <div id="userInfo"></div>
+
+  <h2>Your Bookings ✨</h2>
+  <div id="userBookings"></div>
+
+  <button id="logoutBtn">Logout</button>
+
+  <script>
+    const email = localStorage.getItem("loggedInUser");
+    if (!email) {
+      alert("You must log in first!");
+      window.location.href = "login.html";
+    } else {
+      const user = JSON.parse(localStorage.getItem("user_" + email));
+      document.getElementById("userInfo").innerHTML = `
+        <p><strong>Name:</strong> ${user?.name || "Unknown"}</p>
+        <p><strong>Email:</strong> ${email}</p>
+      `;
+
+      // ✅ Fetch bookings from the correct key: bookings_<email>
+      const userBookingsDiv = document.getElementById("userBookings");
+      const bookings = JSON.parse(localStorage.getItem("bookings_" + email)) || [];
+
+      if (bookings.length === 0) {
+        userBookingsDiv.innerHTML = "<p>No bookings yet.</p>";
+      } else {
+        let bookingsHTML = "";
+        bookings.forEach(booking => {
+          bookingsHTML += `
+            <div class="booking-card">
+              <p><strong>Booking ID:</strong> ${booking.bookingId}</p>
+              <p><strong>Destination:</strong> ${booking.destination}</p>
+              <p><strong>Dates:</strong> ${booking.date_from} to ${booking.date_to}</p>
+              <p><strong>Travelers:</strong> ${booking.travelers}</p>
+              <p><strong>Hotel:</strong> ${booking.hotel_type}</p>
+              <p><strong>Room Type:</strong> ${booking.room_type}</p>
+              <p><strong>Accommodation Requests:</strong> ${booking.accommodation_requests}</p>
+              <p><strong>Other Requests:</strong> ${booking.requests}</p>
+            </div>
+          `;
+        });
+        userBookingsDiv.innerHTML = bookingsHTML;
+      }
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", function() {
+      localStorage.removeItem("loggedInUser");
+      alert("Logged out!");
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>

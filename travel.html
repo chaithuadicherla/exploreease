@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Travel Details</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .map-button,
+    .back-button {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .map-button button,
+    .back-button button {
+      background: #0077b6;
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 5px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .map-button button:hover,
+    .back-button button:hover {
+      background: #0096c7;
+      transform: translateY(-2px);
+    }
+
+    .map-button button:active,
+    .back-button button:active {
+      transform: translateY(0);
+    }
+
+    .travel-header {
+      text-align: center;
+      margin: 30px 20px;
+    }
+
+    footer {
+      text-align: center;
+      background: #0077b6;
+      color: #fff;
+      padding: 20px;
+      margin-top: 50px;
+    }
+
+    footer ul {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    footer li {
+      margin: 0 10px;
+    }
+
+    footer a {
+      color: #90e0ef;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  padding-top: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.modal-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: black;
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="states.html">Destinations</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="travel-header">
+    <h1 id="travel-route"></h1>
+  </div>
+
+  <div class="section">
+    <h2>Top Destinations</h2>
+    <div id="destinations" class="card-container"></div>
+  </div>
+
+  <div class="section">
+    <h2>Famous Foods</h2>
+    <div id="foods" class="card-container"></div>
+  </div>
+
+  <div class="map-button">
+    <a id="mapLink" target="_blank">
+      <button>Open in Google Maps</button>
+    </a>
+  </div>
+
+  <div class="back-button">
+    <a href="index.html">
+      <button>Back to Home</button>
+    </a>
+  </div>
+
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeBtn">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <img id="modalImage" src="" alt="Image" />
+      <p id="modalDescription"></p>
+      <a id="ratingLink" href="#" target="_blank">
+        <button id="ratingButton">View Ratings</button>
+      </a>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      const source = localStorage.getItem("source");
+      const destination = localStorage.getItem("destination");
+
+      if (!source || !destination) {
+        document.body.innerHTML = "<p>Missing source or destination. Please go back and enter details.</p>";
+        return;
+      }
+
+      document.getElementById("travel-route").textContent = `Travel from ${source} to ${destination}`;
+
+      const state = indianStates.find(s => s.name.toLowerCase() === destination.toLowerCase());
+
+      if (state) {
+        showCards(state.topDestinations, "destinations");
+        showCards(state.famousFoods, "foods");
+
+        const mapUrl = `https://www.google.com/maps/dir/${encodeURIComponent(source)}/${encodeURIComponent(destination)}`;
+        document.getElementById("mapLink").href = mapUrl;
+      } else {
+        document.getElementById("destinations").innerHTML = "<p>No data found for this state.</p>";
+        document.getElementById("foods").innerHTML = "<p>No data found for this state.</p>";
+      }
+    });
+  function showCards(items, containerId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    items.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <h3>${item.name}</h3>
+        <img src="${item.image}" alt="${item.name}" />
+        <p>${item.description}</p>
+      `;
+      container.appendChild(card);
+    });
+  }
+function showCards(items, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = ""; // Clear previous
+  items.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.src = item.image;
+    img.alt = item.name;
+    img.style.cursor = "pointer";
+
+    const title = document.createElement("h3");
+    title.textContent = item.name;
+
+    card.appendChild(img);
+    card.appendChild(title);
+    container.appendChild(card);
+
+    // ✅ Click to open modal
+    img.addEventListener("click", () => {
+      openModal(item);
+    });
+  });
+}
+
+// ✅ Modal functions
+const modal = document.getElementById("infoModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalImage = document.getElementById("modalImage");
+const modalDescription = document.getElementById("modalDescription");
+const ratingLink = document.getElementById("ratingLink");
+const closeBtn = document.getElementById("closeBtn");
+
+function openModal(item) {
+  modalTitle.textContent = item.name;
+  modalImage.src = item.image;
+  modalDescription.textContent = item.description;
+  // Google search for ratings
+  const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(item.name)}+ratings`;
+  ratingLink.href = googleSearchUrl;
+
+  modal.style.display = "block";
+}
+
+closeBtn.onclick = function () {
+  modal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+// ✅ Show cards for Destinations or Foods
+function showCards(items, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = ""; // Clear previous
+
+  items.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const img = document.createElement("img");
+    img.src = item.image;
+    img.alt = item.name;
+    img.style.cursor = "pointer";
+
+    const title = document.createElement("h3");
+    title.textContent = item.name;
+
+    // ✅ Click to open modal
+    img.addEventListener("click", () => {
+      openModal(item);
+    });
+
+    card.appendChild(img);
+    card.appendChild(title);
+
+    // ✅ Add weather ONLY for top destinations
+    if (containerId === "destinations") {
+      const weather = document.createElement("p");
+      weather.textContent = "Loading weather...";
+      card.appendChild(weather);
+      fetchWeather(item.name, weather);
+    }
+
+    container.appendChild(card);
+  });
+}
+
+// ✅ Fetch weather using OpenWeatherMap API
+function fetchWeather(city, element) {
+  const apiKey = "b17dec60ad93b8f81c4c29cf74d2c0f4"; // ← Replace with your real key if needed!
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      if (data && data.main && data.weather) {
+        element.textContent = `🌡️ ${data.main.temp}°C, ${data.weather[0].description}`;
+      } else {
+        element.textContent = "Weather unavailable";
+      }
+    })
+    .catch(error => {
+      console.error("Weather fetch error:", error);
+      element.textContent = "Weather unavailable";
+    });
+}
+  </script>
+  <footer>
+    <p>&copy; 2024 ExploreEase. All rights reserved.</p>
+    <ul>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms of Service</a></li>
+    </ul>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Booking Confirmation - ExploreEase</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      text-align: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0faff;
+      overflow-x: hidden;
+    }
+
+    .confirmation-container {
+      padding: 50px 20px;
+    }
+
+    .airplane {
+      position: fixed;
+      top: 50%;
+      left: -100px;
+      width: 80px;
+      animation: fly 5s linear infinite;
+    }
+
+    @keyframes fly {
+      0% { left: -100px; top: 30%; transform: rotate(0deg); }
+      50% { top: 10%; }
+      100% { left: 110%; top: 30%; transform: rotate(15deg); }
+    }
+
+    button {
+      background: #0077b6;
+      color: #fff;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #005f8a;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="states.html">Destinations</a></li>
+      <li><a href="bookings.html">Bookings</a></li>
+    </ul>
+  </nav>
+
+  <img class="airplane" src="https://emojiapi.dev/api/v1/2708/128.png" alt="Airplane" />
+
+  <div class="confirmation-container">
+    <h1 id="thankYouTitle">Thank You for Booking with ExploreEase!</h1>
+    <p id="confirmationMessage">
+      We’ve received your booking request. A confirmation email has been sent to you. ✈✨
+    </p>
+    <p><strong>Your Booking ID:</strong> <span id="bookingId"></span></p>
+    <a href="index.html"><button>Back to Home</button></a>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 ExploreEase. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const customerName = localStorage.getItem("customerName");
+    const bookingID = localStorage.getItem("bookingID");
+
+    if (customerName) {
+      document.getElementById("thankYouTitle").textContent = `Thank You, ${customerName}! 🥰`;
+      document.getElementById("confirmationMessage").textContent =
+        `We’ve received your booking, ${customerName}. A confirmation email has been sent to you. ✈✨`;
+    }
+
+    if (bookingID) {
+      document.getElementById("bookingId").textContent = bookingID;
+    }
+
+    // Confetti celebration
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 }
+    });
+
+    // Clear stored data
+    localStorage.removeItem("customerName");
+    localStorage.removeItem("bookingID");
+  </script>
+</body>
+</html>

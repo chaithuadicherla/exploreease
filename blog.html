@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panda's Travel Diaries</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Layout for blog and client speech */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    nav {
+      background: #333;
+      color: #fff;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav ul li {
+      margin-right: 20px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    nav ul li a.active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .main-content {
+      display: flex;
+      flex: 1;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .blog-section {
+      flex: 2;
+    }
+
+    .client-speech {
+      flex: 1;
+      max-width: 350px;
+      background: #f9f9f9;
+      border-left: 2px solid #ddd;
+      padding: 20px;
+      height: calc(100vh - 70px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .client-speech h2 {
+      text-align: center;
+    }
+
+    .testimonial {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .testimonial .stars {
+      color: gold;
+    }
+
+    .testimonial p {
+      margin: 10px 0;
+    }
+
+    .testimonial .client {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .testimonial .client img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    footer {
+      text-align: center;
+      background: #333;
+      color: #fff;
+      padding: 10px;
+    }
+
+    footer ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    footer ul li {
+      margin: 0 10px;
+    }
+
+    footer ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .main-content {
+        flex-direction: column;
+      }
+      .client-speech {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    .testimonial-wrapper {
+      overflow: hidden;
+      height: 300px; /* adjust to fit a few testimonials at a time */
+      position: relative;
+    }
+
+    .testimonial-slider {
+      display: flex;
+      flex-direction: column;
+      animation: slide 40s linear infinite;
+    }
+
+    @keyframes slide {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-50%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="states.html">States</a></li>
+      <li><a href="travel.html">Plan Travel</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="blog.html" class="active">Travel Diaries</a></li>
+    </ul>
+  </nav>
+
+  <div class="main-content">
+    <section class="blog-section">
+      <h1>Travel Diaries</h1>
+      <p>Share your travel stories and read amazing experiences from fellow explorers!</p>
+      
+      <div class="blog-form">
+        <input type="text" id="blogTitle" placeholder="Your story title" />
+        <textarea id="blogContent" rows="5" placeholder="Write your travel experience here..."></textarea>
+        <button onclick="addBlog()">Post Story</button>
+      </div>
+
+      <h2>Shared Stories</h2>
+      <div id="blogList"></div>
+    </section>
+
+    <aside class="client-speech">
+      <h2>Our Client Speech</h2>
+      <p style="text-align: center;">Explore a different way to travel</p>
+      <div class="testimonial-wrapper">
+        <div class="testimonial-slider">
+<div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>I was nervous about traveling alone, but ExploreEase gave me the confidence and support I needed. My solo trip to Himachal was full of fun and zero stress. Highly recommended!</p>
+        <div class="client">
+          <img src="" alt="indu">
+          <span>Indu</span>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>Our trip to Kerala with ExploreEase was like stepping into a painting. The backwaters cruise, spice plantations, and warm local hospitality made us fall in love with God’s Own Country. We didn’t have to worry about a thing — everything was perfectly planned!</p>
+        <div class="client">
+          <img src="" alt="Sydavali">
+          <span>Sydavali</span>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>ExploreEase turned our Rajasthan tour into a royal adventure! From the forts of Jaipur to the deserts of Jaisalmer, every moment was magical. The local guides shared amazing stories that made history come alive. Highly recommended!</p>
+        <div class="client">
+          <img src="" alt="Sai Venkat">
+          <span>Sai Venkat</span>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>A big shoutout to ExploreEase for arranging the best Goa trip ever! We enjoyed the beaches, water sports, and the vibrant nightlife without a hitch. The hotel and transport arrangements were superb. Can’t wait to book my next holiday!</p>
+        <div class="client">
+          <img src="" alt="Manoj">
+          <span>Manoj</span>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>ExploreEase planned our Himachal getaway beautifully. We trekked in Manali, relaxed in Shimla, and enjoyed snowy adventures in Kufri. The entire trip was hassle-free and full of stunning views. Thank you for such wonderful memories!</p>
+        <div class="client">
+          <img src="" alt="Shashank">
+          <span>Shashank</span>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>We explored the temples and beaches of Tamil Nadu with ExploreEase and it was an enriching experience. From Mahabalipuram to Kanyakumari, every destination was a delight. Excellent arrangements and friendly guides made our trip extra special!</p>
+        <div class="client">
+          <img src="" alt="Rishikesh">
+          <span>Rishikesh</span>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>ExploreEase helped us discover the hidden gems of Uttarakhand. From peaceful mornings in Rishikesh to breathtaking sunsets in Auli, every moment felt magical. The team ensured we had a smooth journey and local experiences we’ll cherish forever!</p>
+        <div class="client">
+          <img src="" alt="Deepak">
+          <span>Deepak</span>
+        </div>
+      </div>
+
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>Visiting Sikkim with ExploreEase was like living in a dream! We witnessed the majestic Kanchenjunga, tasted delicious momos, and soaked in the unique culture of Gangtok. The itinerary was perfectly balanced between adventure and relaxation!</p>
+        <div class="client">
+          <img src="" alt="Sai Eshaan">
+          <span>Sai Eshaan</span>
+        </div>
+      </div>
+
+<div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>ExploreEase planned an amazing Karnataka itinerary for us. From the royal grandeur of Mysore Palace to the coffee plantations in Coorg, everything was spectacular. The local experiences and food recommendations were the cherry on top!</p>
+        <div class="client">
+          <img src="" alt="Sathwik">
+          <span>Sathwik</span>
+        </div>
+      </div>
+
+
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>Thanks to ExploreEase, we experienced the lush beauty of Meghalaya hassle-free. We marveled at living root bridges, explored caves, and enjoyed the misty mornings at Cherrapunji. Every arrangement was spot on. Can’t wait to plan the next trip!</p>
+        <div class="client">
+          <img src="" alt="Vinay">
+          <span>Vinay</span>
+        </div>
+      </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="blog.js"></script>
+  <footer>
+    <p>&copy; 2024 ExploreEase. All rights reserved.</p>
+    <ul>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="terms.html">Terms of Service</a></li>
+    </ul>
+  </footer>
+</body>
+</html>

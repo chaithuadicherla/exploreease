@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Booking Details - ExploreEase</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #cbe8f7, #e0f7fa);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .details-container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .details-container h1 {
+      color: #0077b6;
+      margin-bottom: 20px;
+    }
+
+    .details-container p {
+      font-size: 1rem;
+      margin: 8px 0;
+      text-align: left;
+    }
+
+    .details-container button {
+      background: #0077b6;
+      color: #fff;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s ease;
+    }
+
+    .details-container button:hover {
+      background: #005f8a;
+    }
+  </style>
+</head>
+<body>
+  <div class="details-container">
+    <h1>Your Booking Details 📝</h1>
+    <div id="details"></div>
+    <a href="index.html"><button>Back to Home</button></a>
+  </div>
+<script>
+  // ✅ Get the booking from localStorage
+  const bookingData = localStorage.getItem("selectedBooking");
+
+  if (bookingData) {
+    const booking = JSON.parse(bookingData);
+    document.getElementById("details").innerHTML = `
+      <p><strong>Booking ID:</strong> ${booking.bookingId}</p>
+      <p><strong>Name:</strong> ${booking.name || "N/A"}</p>
+      <p><strong>Email:</strong> ${booking.email || "N/A"}</p>
+      <p><strong>Destination:</strong> ${booking.destination}</p>
+      <p><strong>Travel Dates:</strong> ${booking.date_from} to ${booking.date_to}</p>
+      <p><strong>Number of Travelers:</strong> ${booking.travelers}</p>
+      <p><strong>Hotel:</strong> ${booking.hotel_type || "N/A"}</p>
+      <p><strong>Room Type:</strong> ${booking.room_type || "N/A"}</p>
+      <p><strong>Accommodation Requests:</strong> ${booking.accommodation_requests || "N/A"}</p>
+      <p><strong>Other Requests:</strong> ${booking.requests || "None"}</p>
+    `;
+  } else {
+    document.getElementById("details").innerHTML = `<p>Booking not found 😢</p>`;
+  }
+</script>
+</body>
+</html>

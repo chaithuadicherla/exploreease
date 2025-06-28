@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - ExploreEase</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      text-align: center;
+      padding: 50px;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      background: #0077b6;
+      color: #fff;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005f8a;
+    }
+  </style>
+</head>
+<body>
+  <h1>Login to Your Account 🔑</h1>
+  <form id="loginForm">
+    <label>Email:</label>
+    <input type="email" id="email" required />
+
+    <label>Password:</label>
+    <input type="password" id="password" required />
+
+    <button type="submit">Login</button>
+  </form>
+  <p>Don’t have an account? <a href="signup.html">Sign up here</a></p>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    loginForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value;
+
+      const user = localStorage.getItem("user_" + email);
+      if (user) {
+        const userData = JSON.parse(user);
+        if (userData.password === password) {
+          // ✅ Save session
+          localStorage.setItem("loggedInUser", email);
+          alert("Login successful! 🎉");
+          window.location.href = "dashboard.html";
+        } else {
+          alert("Incorrect password! 😢");
+        }
+      } else {
+        alert("User not found! Please sign up first. 🐾");
+      }
+    });
+  </script>
+</body>
+</html>

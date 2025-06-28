@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up - ExploreEase</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Create Your Account</h1>
+  <form id="signupForm">
+    <label>Name:</label>
+    <input type="text" id="name" required />
+
+    <label>Email:</label>
+    <input type="email" id="email" required />
+
+    <label>Password:</label>
+    <input type="password" id="password" required />
+
+    <button type="submit">Sign Up</button>
+  </form>
+  <p>Already have an account? <a href="login.html">Login here</a></p>
+
+  <script>
+    const signupForm = document.getElementById("signupForm");
+    signupForm.addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // Save user to localStorage
+      const user = { name, email, password };
+      localStorage.setItem("user_" + email, JSON.stringify(user));
+
+      alert("Sign up successful! Please log in.");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>
