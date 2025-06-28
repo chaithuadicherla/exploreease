@@ -175,6 +175,49 @@
   opacity: 0.8;
   transform: scale(1.2);
 }
+nav {
+  background-color: #0077b6;
+  padding: 10px 20px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  margin: 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+  padding: 8px 14px;
+  border-radius: 5px;
+  background: #0096c7;
+  transition: background 0.3s ease;
+}
+
+nav ul li a:hover {
+  background: #00b4d8;
+}
+
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav ul li {
+    margin: 5px 0;
+  }
+}
+
   </style>
   </footer>
   <script src="data.js"></script>
